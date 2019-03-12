@@ -1,24 +1,59 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
+import React, { useState, Component } from 'react';
 import './App.css';
+import AppDisplay from './AppDisplay.js'
+const axios = require('axios');
+
+function Button(props) {
+  return (
+    <div onClick={props.togglePage}>
+      {props.label}
+    </div>
+  );
+}
 
 class App extends Component {
+
+  constructor(props){
+    super(props);
+    this.state={
+      activePage: 'home(init)',
+      showList: []
+    }
+  }
+
+  componentDidMount(){
+    axios
+      .get('https://stormy-castle-25399.herokuapp.com/people')
+      .then(({ data })=> {
+        console.log(data);
+        this.setState(
+          {
+            showList: data
+          }
+        );
+      })
+      .catch((err)=> {})
+    }
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
+        <header className="App-body">
+          <div className = 'appMenu'>
+            <Button
+            label = 'Home'
+            togglePage = {()=>this.setState({activePage: 'home'})}
+            />
+            <Button
+            label = 'Add'
+            togglePage = {()=>this.setState({activePage: 'add'})}
+            />
+            <Button
+            label ='Search'
+            togglePage = {()=>this.setState({activePage: 'search'})}
+            />
+            </div>
+          <AppDisplay list={this.state.showList} activePage={this.state.activePage}/>
         </header>
       </div>
     );
