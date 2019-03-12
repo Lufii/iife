@@ -7,16 +7,21 @@
 .App-body {
   background-color: #282c34;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
   color: white;
 }
 
 .appMenu{
+    padding-top: 15px;
+    font-size: 33px;
     margin-bottom:10px;
+}
+
+.menuButton{
+  display: inline-block;
+  margin-right: 7px;
+  margin-left: 7px;
 }
 
 .appMenu div:hover{
@@ -27,29 +32,56 @@
 .row {
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
   width: 100%;
 }
 
-.column {
+.cell {
+  border: 1px solid white;
+  font-size: 23px;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   flex-basis: 100%;
   flex: 1;
 }
 
-.blue-column {
-  background-color: blue;
-  height: 100px;
+.cell1{
+  flex:0.15;
 }
 
-.green-column {
-  background-color: green;
-  height: 100px;
+.cell6, .cell7, .cell8{
+  flex:0.2
+}
+
+.listWrapper >div:first-of-type{
+  font-weight: bold;
+  border-bottom: 2px solid white;
 }
 
 .listWrapper {
   width: 100%;
-  margin: 15px;
-  background-color: red;
+  background-color: gray;
+}
+
+.cell6:hover, .cell7:hover, .cell8:hover{
+  cursor: pointer;
+}
+
+.listWrapper >div:first-of-type:hover .cell6:hover{
+  cursor:default;
+}
+
+@media only screen and (max-width: 800px) {
+  .listWrapper >div:first-of-type{
+    display: none;
+  }
+
+  .cell3, .cell4, .cell5 {
+    display: none;
+  }
+}
+
+.cell8 svg, .cell7 svg, .cell6 svg{
+  height: 25px;
+  padding: 2px;
 }

@@ -5,7 +5,7 @@ const axios = require('axios');
 
 function Button(props) {
   return (
-    <div onClick={props.togglePage}>
+    <div className='menuButton' onClick={props.togglePage}>
       {props.label}
     </div>
   );
@@ -16,7 +16,7 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state={
-      activePage: 'home(init)',
+      activePage: 'home',
       showList: []
     }
   }
