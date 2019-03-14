@@ -2,5 +2,5 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## for local demo
 
-npm install
+npm install<br/>
 npm start
