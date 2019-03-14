@@ -5,6 +5,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 npm install<br/>
 npm start
 
-## in case back-end is down, here's the repo
+## back-end 
 
 https://github.com/Lufii/iibe
+(give it 2 minutes first, it may seem down but probably isn't)
