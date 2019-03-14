@@ -1,11 +1,12 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## for local demo
+## run locally
 
 npm install<br/>
 npm start
 
 ## back-end 
 
-https://github.com/Lufii/iibe
-(give it 2 minutes first, it may seem down but probably isn't)
+Deployed on heroku. May seem down but give it 2 minutes first. </br>
+If all else fails it can be run locally. https://github.com/Lufii/iibe
+
