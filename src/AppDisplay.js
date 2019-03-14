@@ -123,538 +123,538 @@ function AppDisplay(props) {
         username: username,
         email: email,
         address: {street: street,
-                  suite: suite,
-                  city: city,
-                  zipcode: zipcode,
-                  geo: {lat: lat,
-                        lng: lng}
-                  },
-        phone: phone,
-        website: website,
-        company: {name: companyname,
-                  catchPhrase: catchphrase,
-                  bs: bs}
-      },
-    }).then(function (response){
-      if(response.status === 200){
-        setMessage(name+' has been added');
-        return response;
-      }}).then(
-        clearState()
-      ).catch(function (error){
-        setMessage('Oops, something went wrong. '+props.person.name+' has not been added. Please make sure your id field is not a duplicate.')
-        return error;
-      })
-      else setMessage('ID is needed in order to create a person entry. Nothing was added to the DB.')
-  }
+          suite: suite,
+          city: city,
+          zipcode: zipcode,
+          geo: {lat: lat,
+            lng: lng}
+          },
+          phone: phone,
+          website: website,
+          company: {name: companyname,
+            catchPhrase: catchphrase,
+            bs: bs}
+          },
+        }).then(function (response){
+          if(response.status === 200){
+            setMessage(name+' has been added');
+            return response;
+          }}).then(
+            clearState()
+          ).catch(function (error){
+            setMessage('Oops, something went wrong. '+props.person.name+' has not been added. Please make sure your id field is not a duplicate.')
+            return error;
+          })
+          else setMessage('ID is needed in order to create a person entry. Nothing was added to the DB.')
+        }
 
-  function searchPerson(){
-    let res= [];
-    for(let i in props.list)
-      if(props.list[i].name === search)
-        res.push(props.list[i])
-    setSearchlist(res);
-    if(res.length===0)
-      setMessage('No person matching that name was found');
-  }
+        function searchPerson(){
+          let res= [];
+          for(let i in props.list)
+          if(props.list[i].name === search)
+          res.push(props.list[i])
+          setSearchlist(res);
+          if(res.length===0)
+          setMessage('No person matching that name was found');
+        }
 
-  function editPerson(){
-    /*function populateWithOldData(){
-      let labels= [];
-      let oldState = [];
-      let newState = [];
-      newState.push(id);
-      newState.push(name);
-      newState.push(username);
-      newState.push(email);
-      newState.push(street);
-      newState.push(suite);
-      newState.push(city);
-      newState.push(zipcode);
-      newState.push(lat);
-      newState.push(lng);
-      newState.push(phone);
-      newState.push(website);
-      newState.push(companyname);
-      newState.push(catchphrase);
-      newState.push(bs);
-      // oldState Array + labels
-      for(let i in props.person){
-        if(i!='_id'){
+        function editPerson(){
+          /*function populateWithOldData(){
+          let labels= [];
+          let oldState = [];
+          let newState = [];
+          newState.push(id);
+          newState.push(name);
+          newState.push(username);
+          newState.push(email);
+          newState.push(street);
+          newState.push(suite);
+          newState.push(city);
+          newState.push(zipcode);
+          newState.push(lat);
+          newState.push(lng);
+          newState.push(phone);
+          newState.push(website);
+          newState.push(companyname);
+          newState.push(catchphrase);
+          newState.push(bs);
+          // oldState Array + labels
+          for(let i in props.person){
+          if(i!='_id'){
           if(typeof(i)!='object'){
-            oldState.push(props.person.i);
-            labels.push(i);
-          }
-          else
-            for(let j in props.person.i)
-              if(typeof(j)!='object'){
-                oldState.push(props.person.i.j);
-                labels.push(j);
-              }
-              else
-                for(let k in props.person.i.j)
-                  if(typeof(k)!='object'){
-                    oldState.push(props.person.i.j.k);
-                    labels.push(k);
-                  }
+          oldState.push(props.person.i);
+          labels.push(i);
         }
+        else
+        for(let j in props.person.i)
+        if(typeof(j)!='object'){
+        oldState.push(props.person.i.j);
+        labels.push(j);
       }
-      //now start populating
-      for(let i in newState)
-        if(!newState[i]){
-          console.log('n-are new state '+labels[i]);
-          labels[i]='set'+labels[i];
-          {() => return {()=> {return labels[i]}+(oldState[i])}}
-        }
-      } */
-    setMessage('Please wait');
-    //populateWithOldData();
-    if(id)
-    axios({
-      method:'POST',
-      url:'https://stormy-castle-25399.herokuapp.com/person/edit',
-      data:{
-        id: parseInt(props.person.id),
-        nid: parseInt(id),
-        nname: name,
-        nusername: username,
-        nemail: email,
-        nstreet: street,
-        nsuite: suite,
-        ncity: city,
-        nzipcode: zipcode,
-        nlat: lat,
-        nlng: lng,
-        nphone: phone,
-        nwebsite: website,
-        ncompanyname: companyname,
-        ncatchphrase: catchphrase,
-        nbs: bs
-      },
-    }).then(function (response){
-      if(response.status === 200){
-        setMessage(props.person.name+' has been edited');
-        return response;
-      }}).then(
-        clearState()
-      ).catch(function (error){
-        setMessage('Oops, something went wrong. '+props.person.name+' has not been edited. Please make sure your id field is not a duplicate.')
-        return error;
-      })
-      else setMessage('ID is needed in order to edit a person entry. Nothing was edited within the DB.')
-  }
-
-  function deletePerson(person){
-    axios({
-      method:'POST',
-      url:'https://stormy-castle-25399.herokuapp.com/person/delete',
-      data:{
-        id: parseInt(person.id),
-      },
-    }).then(function (response){
-      if(response.status === 200){
-        setMessage(person.name+' has been deleted');
-        return response;
-      }}).catch(function (error){
-        setMessage('Oops, something went wrong. '+person.name+' has not been deleted.')
-        return error;
-      })
+      else
+      for(let k in props.person.i.j)
+      if(typeof(k)!='object'){
+      oldState.push(props.person.i.j.k);
+      labels.push(k);
     }
+  }
+}
+//now start populating
+for(let i in newState)
+if(!newState[i]){
+console.log('n-are new state '+labels[i]);
+labels[i]='set'+labels[i];
+{() => return {()=> {return labels[i]}+(oldState[i])}}
+}
+} */
+setMessage('Please wait');
+//populateWithOldData();
+if(id)
+axios({
+  method:'POST',
+  url:'https://stormy-castle-25399.herokuapp.com/person/edit',
+  data:{
+    id: parseInt(props.person.id),
+    nid: parseInt(id),
+    nname: name,
+    nusername: username,
+    nemail: email,
+    nstreet: street,
+    nsuite: suite,
+    ncity: city,
+    nzipcode: zipcode,
+    nlat: lat,
+    nlng: lng,
+    nphone: phone,
+    nwebsite: website,
+    ncompanyname: companyname,
+    ncatchphrase: catchphrase,
+    nbs: bs
+  },
+}).then(function (response){
+  if(response.status === 200){
+    setMessage(props.person.name+' has been edited');
+    return response;
+  }}).then(
+    clearState()
+  ).catch(function (error){
+    setMessage('Oops, something went wrong. '+props.person.name+' has not been edited. Please make sure your id field is not a duplicate.')
+    return error;
+  })
+  else setMessage('ID is needed in order to edit a person entry. Nothing was edited within the DB.')
+}
+
+function deletePerson(person){
+  axios({
+    method:'POST',
+    url:'https://stormy-castle-25399.herokuapp.com/person/delete',
+    data:{
+      id: parseInt(person.id),
+    },
+  }).then(function (response){
+    if(response.status === 200){
+      setMessage(person.name+' has been deleted');
+      return response;
+    }}).catch(function (error){
+      setMessage('Oops, something went wrong. '+person.name+' has not been deleted.')
+      return error;
+    })
+  }
 
   function noRefresh(e){
     e.preventDefault();
   }
 
   if(props.activePage==='search')
-    return(
-      <div>
-      <form onSubmit={noRefresh}>
-      <input type='text' placeholder='Person name' value={search} onChange={e=>setSearch(e.target.value)}></input>
-      <br/>
-      <button className='searchButton' type='submit' onClick={searchPerson}>Search</button>
-      </form>
-      <br/><br/>
-      <ListDisplay list={searchlist} toggleEdit={props.toggleEdit} toggleDetails={props.toggleDetails} toggleDelete={props.toggleDelete}/>
-      <br/>
-      <div>{message}</div>
-      <br/>
-      <div className='fontAwesome'>SVG images credit goes to FontAwesome</div>
-      </div>
-    );
+  return(
+    <div>
+    <form onSubmit={noRefresh}>
+    <input type='text' placeholder='Person name' value={search} onChange={e=>setSearch(e.target.value)}></input>
+    <br/>
+    <button className='searchButton' type='submit' onClick={searchPerson}>Search</button>
+    </form>
+    <br/><br/>
+    <ListDisplay list={searchlist} toggleEdit={props.toggleEdit} toggleDetails={props.toggleDetails} toggleDelete={props.toggleDelete}/>
+    <br/>
+    <div>{message}</div>
+    <br/>
+    <div className='fontAwesome'>SVG images credit goes to FontAwesome</div>
+    </div>
+  );
 
   if(props.activePage==='add'){
-      return(
-        <div className='addDiv'>
-        <table className='ohGodIDidThisByHandWhy'>
-        <tbody>
-        <tr className='detailsRow'>
-        <td>id</td>
-        <td>
+    return(
+      <div className='addDiv'>
+      <table className='ohGodIDidThisByHandWhy'>
+      <tbody>
+      <tr className='detailsRow'>
+      <td>id</td>
+      <td>
       <input type='number' value={id} onChange={e=>setId(e.target.value)}></input>
       </td>
-        </tr>
-        <tr className='detailsRow'>
-        <td>name</td>
-        <td>
-        <input type='text' value={name} onChange={e=>setName(e.target.value)}></input>
-        </td>
-        </tr>
-        <tr className='detailsRow'>
-        <td>username</td>
-        <td>
-        <input type='text' value={username} onChange={e=>setUsername(e.target.value)}></input>
-        </td>
-        </tr>
-        <tr className='detailsRow'>
-        <td>email</td>
-        <td>
-        <input type='text' value={email} onChange={e=>setEmail(e.target.value)}></input>
-        </td>
-        </tr>
-        <tr className='detailsRow'>
-        <td>street</td>
-        <td>
-        <input type='text' value={street} onChange={e=>setStreet(e.target.value)}></input>
-        </td>
-        </tr>
-        <tr className='detailsRow'>
-        <td>suite</td>
-        <td>
-        <input type='text' value={suite} onChange={e=>setSuite(e.target.value)}></input>
-        </td>
-        </tr>
-        <tr className='detailsRow'>
-        <td>city</td>
-        <td>
-        <input type='text' value={city} onChange={e=>setCity(e.target.value)}></input>
-        </td>
-        </tr>
-        <tr className='detailsRow'>
-        <td>zipcode</td>
-        <td>
-        <input type='text' value={zipcode} onChange={e=>setZipcode(e.target.value)}></input>
-        </td>
-        </tr>
-        <tr className='detailsRow'>
-        <td>latitude</td>
-        <td>
-        <input type='text' value={lat} onChange={e=>setLat(e.target.value)}></input>
-        </td>
-        </tr>
-        <tr className='detailsRow'>
-        <td>longitude</td>
-        <td>
-        <input type='text' value={lng} onChange={e=>setLng(e.target.value)}></input>
-        </td>
-        </tr>
-        <tr className='detailsRow'>
-        <td>phone</td>
-        <td>
-        <input type='text' value={phone} onChange={e=>setPhone(e.target.value)}></input>
-        </td>
-        </tr>
-        <tr className='detailsRow'>
-        <td>website</td>
-        <td>
-        <input type='text' value={website} onChange={e=>setWebsite(e.target.value)}></input>
-        </td>
-        </tr>
-        <tr className='detailsRow'>
-        <td>company name</td>
-        <td>
-        <input type='text' value={companyname} onChange={e=>setCompanyname(e.target.value)}></input>
-        </td>
-        </tr>
-        <tr className='detailsRow'>
-        <td>catchphrase</td>
-        <td>
-        <input type='text' value={catchphrase} onChange={e=>setCatchphrase(e.target.value)}></input>
-        </td>
-        </tr>
-        <tr className='detailsRow'>
-        <td>company bs</td>
-        <td>
-        <input type='text' value={bs} onChange={e=>setBs(e.target.value)}></input>
-        </td>
-        </tr>
-        </tbody>
-        </table>
-        <br/>
-        <input className='addButton' type='button' value='Add' onClick={addPerson}></input>
-        <br/><br/>
-        <div>{message}</div>
-        </div>
-      );
-    }
-
+      </tr>
+      <tr className='detailsRow'>
+      <td>name</td>
+      <td>
+      <input type='text' value={name} onChange={e=>setName(e.target.value)}></input>
+      </td>
+      </tr>
+      <tr className='detailsRow'>
+      <td>username</td>
+      <td>
+      <input type='text' value={username} onChange={e=>setUsername(e.target.value)}></input>
+      </td>
+      </tr>
+      <tr className='detailsRow'>
+      <td>email</td>
+      <td>
+      <input type='text' value={email} onChange={e=>setEmail(e.target.value)}></input>
+      </td>
+      </tr>
+      <tr className='detailsRow'>
+      <td>street</td>
+      <td>
+      <input type='text' value={street} onChange={e=>setStreet(e.target.value)}></input>
+      </td>
+      </tr>
+      <tr className='detailsRow'>
+      <td>suite</td>
+      <td>
+      <input type='text' value={suite} onChange={e=>setSuite(e.target.value)}></input>
+      </td>
+      </tr>
+      <tr className='detailsRow'>
+      <td>city</td>
+      <td>
+      <input type='text' value={city} onChange={e=>setCity(e.target.value)}></input>
+      </td>
+      </tr>
+      <tr className='detailsRow'>
+      <td>zipcode</td>
+      <td>
+      <input type='text' value={zipcode} onChange={e=>setZipcode(e.target.value)}></input>
+      </td>
+      </tr>
+      <tr className='detailsRow'>
+      <td>latitude</td>
+      <td>
+      <input type='text' value={lat} onChange={e=>setLat(e.target.value)}></input>
+      </td>
+      </tr>
+      <tr className='detailsRow'>
+      <td>longitude</td>
+      <td>
+      <input type='text' value={lng} onChange={e=>setLng(e.target.value)}></input>
+      </td>
+      </tr>
+      <tr className='detailsRow'>
+      <td>phone</td>
+      <td>
+      <input type='text' value={phone} onChange={e=>setPhone(e.target.value)}></input>
+      </td>
+      </tr>
+      <tr className='detailsRow'>
+      <td>website</td>
+      <td>
+      <input type='text' value={website} onChange={e=>setWebsite(e.target.value)}></input>
+      </td>
+      </tr>
+      <tr className='detailsRow'>
+      <td>company name</td>
+      <td>
+      <input type='text' value={companyname} onChange={e=>setCompanyname(e.target.value)}></input>
+      </td>
+      </tr>
+      <tr className='detailsRow'>
+      <td>catchphrase</td>
+      <td>
+      <input type='text' value={catchphrase} onChange={e=>setCatchphrase(e.target.value)}></input>
+      </td>
+      </tr>
+      <tr className='detailsRow'>
+      <td>company bs</td>
+      <td>
+      <input type='text' value={bs} onChange={e=>setBs(e.target.value)}></input>
+      </td>
+      </tr>
+      </tbody>
+      </table>
+      <br/>
+      <input className='addButton' type='button' value='Add' onClick={addPerson}></input>
+      <br/><br/>
+      <div>{message}</div>
+      </div>
+    );
+  }
+  
   if(props.activePage==='edit'){
-      let person = props.person;
+    let person = props.person;
 
-      return(
-        <div className='editDiv'>
-        <table className='ohGodIDidThisByHandWhy'>
-        <tbody>
-        <tr className='detailsRow'>
-        <td>id</td>
-        <td>
-        {person.id}
-        </td>
-        <td>
+    return(
+      <div className='editDiv'>
+      <table className='ohGodIDidThisByHandWhy'>
+      <tbody>
+      <tr className='detailsRow'>
+      <td>id</td>
+      <td>
+      {person.id}
+      </td>
+      <td>
       <input type='number' value={id} onChange={e=>setId(e.target.value)}></input>
       </td>
-        </tr>
-        <tr className='detailsRow'>
-        <td>name</td>
-        <td>
-        {person.name}
-        </td>
-        <td>
-        <input type='text' value={name} onChange={e=>setName(e.target.value)}></input>
-        </td>
-        </tr>
-        <tr className='detailsRow'>
-        <td>username</td>
-        <td>
-        {person.username}
-        </td>
-        <td>
-        <input type='text' value={username} onChange={e=>setUsername(e.target.value)}></input>
-        </td>
-        </tr>
-        <tr className='detailsRow'>
-        <td>email</td>
-        <td>
-        {person.email}
-        </td>
-        <td>
-        <input type='text' value={email} onChange={e=>setEmail(e.target.value)}></input>
-        </td>
-        </tr>
-        <tr className='detailsRow'>
-        <td>street</td>
-        <td>
-        {person.address.street}
-        </td>
-        <td>
-        <input type='text' value={street} onChange={e=>setStreet(e.target.value)}></input>
-        </td>
-        </tr>
-        <tr className='detailsRow'>
-        <td>suite</td>
-        <td>
-        {person.address.suite}
-        </td>
-        <td>
-        <input type='text' value={suite} onChange={e=>setSuite(e.target.value)}></input>
-        </td>
-        </tr>
-        <tr className='detailsRow'>
-        <td>city</td>
-        <td>
-        {person.address.city}
-        </td>
-        <td>
-        <input type='text' value={city} onChange={e=>setCity(e.target.value)}></input>
-        </td>
-        </tr>
-        <tr className='detailsRow'>
-        <td>zipcode</td>
-        <td>
-        {person.address.zipcode}
-        </td>
-        <td>
-        <input type='text' value={zipcode} onChange={e=>setZipcode(e.target.value)}></input>
-        </td>
-        </tr>
-        <tr className='detailsRow'>
-        <td>latitude</td>
-        <td>
-        {person.address.geo.lat}
-        </td>
-        <td>
-        <input type='text' value={lat} onChange={e=>setLat(e.target.value)}></input>
-        </td>
-        </tr>
-        <tr className='detailsRow'>
-        <td>longitude</td>
-        <td>
-        {person.address.geo.lng}
-        </td>
-        <td>
-        <input type='text' value={lng} onChange={e=>setLng(e.target.value)}></input>
-        </td>
-        </tr>
-        <tr className='detailsRow'>
-        <td>phone</td>
-        <td>
-        {person.phone}
-        </td>
-        <td>
-        <input type='text' value={phone} onChange={e=>setPhone(e.target.value)}></input>
-        </td>
-        </tr>
-        <tr className='detailsRow'>
-        <td>website</td>
-        <td>
-        {person.website}
-        </td>
-        <td>
-        <input type='text' value={website} onChange={e=>setWebsite(e.target.value)}></input>
-        </td>
-        </tr>
-        <tr className='detailsRow'>
-        <td>company name</td>
-        <td>
-        {person.company.name}
-        </td>
-        <td>
-        <input type='text' value={companyname} onChange={e=>setCompanyname(e.target.value)}></input>
-        </td>
-        </tr>
-        <tr className='detailsRow'>
-        <td>catchphrase</td>
-        <td>
-        {person.company.catchPhrase}
-        </td>
-        <td>
-        <input type='text' value={catchphrase} onChange={e=>setCatchphrase(e.target.value)}></input>
-        </td>
-        </tr>
-        <tr className='detailsRow'>
-        <td>company bs</td>
-        <td>
-        {person.company.bs}
-        </td>
-        <td>
-        <input type='text' value={bs} onChange={e=>setBs(e.target.value)}></input>
-        </td>
-        </tr>
-        </tbody>
-        </table>
-        <br/>
-        <input className='editButton' type='button' value='Edit' onClick={editPerson}></input>
-        <br/><br/>
-        <div>{message}</div>
-        </div>
-      );
-    }
-
-  if(props.activePage==='delete'){
-      deletePerson(props.person);
-    }
-
-  if(props.activePage==='details'){
-      let person = props.person;
-      return(
-        <table className='ohGodIDidThisByHandWhy'>
-        <tbody>
-        <tr className='detailsRow'>
-        <td>id</td>
-        <td>
-        {person.id}
-        </td>
-        </tr>
-        <tr className='detailsRow'>
-        <td>name</td>
-        <td>
-        {person.name}
-        </td>
-        </tr>
-        <tr className='detailsRow'>
-        <td>username</td>
-        <td>
-        {person.username}
-        </td>
-        </tr>
-        <tr className='detailsRow'>
-        <td>email</td>
-        <td>
-        {person.email}
-        </td>
-        </tr>
-        <tr className='detailsRow'>
-        <td>street</td>
-        <td>
-        {person.address.street}
-        </td>
-        </tr>
-        <tr className='detailsRow'>
-        <td>suite</td>
-        <td>
-        {person.address.suite}
-        </td>
-        </tr>
-        <tr className='detailsRow'>
-        <td>city</td>
-        <td>
-        {person.address.city}
-        </td>
-        </tr>
-        <tr className='detailsRow'>
-        <td>zipcode</td>
-        <td>
-        {person.address.zipcode}
-        </td>
-        </tr>
-        <tr className='detailsRow'>
-        <td>latitude</td>
-        <td>
-        {person.address.geo.lat}
-        </td>
-        </tr>
-        <tr className='detailsRow'>
-        <td>longitude</td>
-        <td>
-        {person.address.geo.lng}
-        </td>
-        </tr>
-        <tr className='detailsRow'>
-        <td>phone</td>
-        <td>
-        {person.phone}
-        </td>
-        </tr>
-        <tr className='detailsRow'>
-        <td>website</td>
-        <td>
-        {person.website}
-        </td>
-        </tr>
-        <tr className='detailsRow'>
-        <td>company name</td>
-        <td>
-        {person.company.name}
-        </td>
-        </tr>
-        <tr className='detailsRow'>
-        <td>company catchphrase</td>
-        <td>
-        {person.company.catchPhrase}
-        </td>
-        </tr>
-        <tr className='detailsRow'>
-        <td>company bs</td>
-        <td>
-        {person.company.bs}
-        </td>
-        </tr>
-        </tbody>
-        </table>
-      );
-    }
-
-  if(props.list.length>0 && (props.activePage==='home' || props.activePage==='delete')){
-      return (
-        <div>
-        <ListDisplay list={props.list} toggleEdit={props.toggleEdit} toggleDetails={props.toggleDetails} toggleDelete={props.toggleDelete}/>
-        <div><br/>{message}</div>
-        </div>
-      );
-    }
-    else
-    return (
-      <div>nada from axios</div>
+      </tr>
+      <tr className='detailsRow'>
+      <td>name</td>
+      <td>
+      {person.name}
+      </td>
+      <td>
+      <input type='text' value={name} onChange={e=>setName(e.target.value)}></input>
+      </td>
+      </tr>
+      <tr className='detailsRow'>
+      <td>username</td>
+      <td>
+      {person.username}
+      </td>
+      <td>
+      <input type='text' value={username} onChange={e=>setUsername(e.target.value)}></input>
+      </td>
+      </tr>
+      <tr className='detailsRow'>
+      <td>email</td>
+      <td>
+      {person.email}
+      </td>
+      <td>
+      <input type='text' value={email} onChange={e=>setEmail(e.target.value)}></input>
+      </td>
+      </tr>
+      <tr className='detailsRow'>
+      <td>street</td>
+      <td>
+      {person.address.street}
+      </td>
+      <td>
+      <input type='text' value={street} onChange={e=>setStreet(e.target.value)}></input>
+      </td>
+      </tr>
+      <tr className='detailsRow'>
+      <td>suite</td>
+      <td>
+      {person.address.suite}
+      </td>
+      <td>
+      <input type='text' value={suite} onChange={e=>setSuite(e.target.value)}></input>
+      </td>
+      </tr>
+      <tr className='detailsRow'>
+      <td>city</td>
+      <td>
+      {person.address.city}
+      </td>
+      <td>
+      <input type='text' value={city} onChange={e=>setCity(e.target.value)}></input>
+      </td>
+      </tr>
+      <tr className='detailsRow'>
+      <td>zipcode</td>
+      <td>
+      {person.address.zipcode}
+      </td>
+      <td>
+      <input type='text' value={zipcode} onChange={e=>setZipcode(e.target.value)}></input>
+      </td>
+      </tr>
+      <tr className='detailsRow'>
+      <td>latitude</td>
+      <td>
+      {person.address.geo.lat}
+      </td>
+      <td>
+      <input type='text' value={lat} onChange={e=>setLat(e.target.value)}></input>
+      </td>
+      </tr>
+      <tr className='detailsRow'>
+      <td>longitude</td>
+      <td>
+      {person.address.geo.lng}
+      </td>
+      <td>
+      <input type='text' value={lng} onChange={e=>setLng(e.target.value)}></input>
+      </td>
+      </tr>
+      <tr className='detailsRow'>
+      <td>phone</td>
+      <td>
+      {person.phone}
+      </td>
+      <td>
+      <input type='text' value={phone} onChange={e=>setPhone(e.target.value)}></input>
+      </td>
+      </tr>
+      <tr className='detailsRow'>
+      <td>website</td>
+      <td>
+      {person.website}
+      </td>
+      <td>
+      <input type='text' value={website} onChange={e=>setWebsite(e.target.value)}></input>
+      </td>
+      </tr>
+      <tr className='detailsRow'>
+      <td>company name</td>
+      <td>
+      {person.company.name}
+      </td>
+      <td>
+      <input type='text' value={companyname} onChange={e=>setCompanyname(e.target.value)}></input>
+      </td>
+      </tr>
+      <tr className='detailsRow'>
+      <td>catchphrase</td>
+      <td>
+      {person.company.catchPhrase}
+      </td>
+      <td>
+      <input type='text' value={catchphrase} onChange={e=>setCatchphrase(e.target.value)}></input>
+      </td>
+      </tr>
+      <tr className='detailsRow'>
+      <td>company bs</td>
+      <td>
+      {person.company.bs}
+      </td>
+      <td>
+      <input type='text' value={bs} onChange={e=>setBs(e.target.value)}></input>
+      </td>
+      </tr>
+      </tbody>
+      </table>
+      <br/>
+      <input className='editButton' type='button' value='Edit' onClick={editPerson}></input>
+      <br/><br/>
+      <div>{message}</div>
+      </div>
     );
   }
 
-  export default AppDisplay;
+  if(props.activePage==='delete'){
+    deletePerson(props.person);
+  }
+
+  if(props.activePage==='details'){
+    let person = props.person;
+    return(
+      <table className='ohGodIDidThisByHandWhy'>
+      <tbody>
+      <tr className='detailsRow'>
+      <td>id</td>
+      <td>
+      {person.id}
+      </td>
+      </tr>
+      <tr className='detailsRow'>
+      <td>name</td>
+      <td>
+      {person.name}
+      </td>
+      </tr>
+      <tr className='detailsRow'>
+      <td>username</td>
+      <td>
+      {person.username}
+      </td>
+      </tr>
+      <tr className='detailsRow'>
+      <td>email</td>
+      <td>
+      {person.email}
+      </td>
+      </tr>
+      <tr className='detailsRow'>
+      <td>street</td>
+      <td>
+      {person.address.street}
+      </td>
+      </tr>
+      <tr className='detailsRow'>
+      <td>suite</td>
+      <td>
+      {person.address.suite}
+      </td>
+      </tr>
+      <tr className='detailsRow'>
+      <td>city</td>
+      <td>
+      {person.address.city}
+      </td>
+      </tr>
+      <tr className='detailsRow'>
+      <td>zipcode</td>
+      <td>
+      {person.address.zipcode}
+      </td>
+      </tr>
+      <tr className='detailsRow'>
+      <td>latitude</td>
+      <td>
+      {person.address.geo.lat}
+      </td>
+      </tr>
+      <tr className='detailsRow'>
+      <td>longitude</td>
+      <td>
+      {person.address.geo.lng}
+      </td>
+      </tr>
+      <tr className='detailsRow'>
+      <td>phone</td>
+      <td>
+      {person.phone}
+      </td>
+      </tr>
+      <tr className='detailsRow'>
+      <td>website</td>
+      <td>
+      {person.website}
+      </td>
+      </tr>
+      <tr className='detailsRow'>
+      <td>company name</td>
+      <td>
+      {person.company.name}
+      </td>
+      </tr>
+      <tr className='detailsRow'>
+      <td>company catchphrase</td>
+      <td>
+      {person.company.catchPhrase}
+      </td>
+      </tr>
+      <tr className='detailsRow'>
+      <td>company bs</td>
+      <td>
+      {person.company.bs}
+      </td>
+      </tr>
+      </tbody>
+      </table>
+    );
+  }
+
+  if(props.list.length>0 && (props.activePage==='home' || props.activePage==='delete')){
+    return (
+      <div>
+      <ListDisplay list={props.list} toggleEdit={props.toggleEdit} toggleDetails={props.toggleDetails} toggleDelete={props.toggleDelete}/>
+      <div><br/>{message}</div>
+      </div>
+    );
+  }
+  else
+  return (
+    <div>nada from axios</div>
+  );
+}
+
+export default AppDisplay;
